@@ -475,7 +475,22 @@ message.channel.send('**BlueBot: __In Ur DM__ __بالــخـــاــص__**')
 
     }
 });
- 
+client.on('message', message => {
+    if (message.content === 'Bhelp') {
+        let helpEmbed = new Discord.RichEmbed()
+        .setTitle('**بـــــلـــو بــــــوت**')
+        .setDescription('**برفكس البوت (B)**')
+        .addField('Blinkdm', 'ارسال رابط السيرفر بالخاص')
+        .addField('Blink', 'دخول رومك الصوتي')
+        .addField('disconnect', 'الخروج من رومك الصوتي')
+        .addField('skip', 'تخطي الأغنية')
+        .addField('pause', 'ايقاف الاغنية مؤقتا')
+        .addField('resume', 'تكملة الاغنية')
+        .addField('queue', 'اظهار قائمة التشغيل')
+        .addField('np', 'اظهار الاغنية اللي انت مشغلها حاليا')
+      message.channel.send(helpEmbed);
+    }
+});
  
  
 client.on('voiceStateUpdate', (codes, ReBeL) => {
