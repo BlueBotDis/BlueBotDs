@@ -61,17 +61,6 @@ message.author.send(`**مدة الرابط : يـوم**`)
     }
 });
 
-
-  const embed = new Discord.RichEmbed()
-  .setThumbnail('https://banner2.kisspng.com/20180215/ade/kisspng-office-supplies-animation-calculator-5a85e764e3aa68.4914103215187249649325.jpg')
-.setDescription(`**
- السؤال يقولك :thinking:  : ${question}
- طبعا الاجابة :writing_hand: : ${answer}**
-`)
-  msg.channel.send(embed)
-  }
-};
-});
  
  
  
