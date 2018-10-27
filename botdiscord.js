@@ -438,7 +438,8 @@ client.on('message', message => {
 
 
  message.author.sendMessage(`
- BLUE BOT
+
+
 بـــــلـــو بــــــوت
 **═════════════════════**
                         **اوامر عادية**
