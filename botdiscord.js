@@ -432,49 +432,6 @@ client.on('message', message => {
  
  
  
- client.on('message', message => {
-    if (message.author.bot) return;
-     if (message.content === prefix + "help") {
-
-
- message.author.sendMessage(`
-
-
-بـــــلـــو بــــــوت
-**═════════════════════**
-                        **اوامر عادية**
-Blinkdm  || ارسال رابط السيرفر بالخاص
-Blink || لينك اي بوت يجب عليك ان تمنشن البوت
-Bcat || صور قطط كيوت
-Bsug || للأقتراح
-Binvites || لمعرفة عدد دعواتك
-Binvite || لمعرفة عدد دعواتك
-Bmembers || معرفة معلومات الاعبين
-Brps || حجرة ورقة مقص __قد تكون معطله__ `نعمل على اصلاحها`
-Bmar ||  لعبة الزواج
-Bnew || لفتح تذكرة
-Bcounting || للعد
-**═════════════════════**
-                        **اوامر ادارية**
-Bgiveaway || قيف اواي
-Bclean || لمسح 12 رسالة فقط
-Bserver || لمعرفة معلومات السيرفر
-BgRole || لمعرفة معلومات الرتبة
-Bid || ملفك
-Bcc || انشاء الوان 
-Bclosec || قفل الشات
-Bopenc || فتح الشات
-Bclear 50 || لمسح 50 رسالة
-Bbc || برودكاست
-Bban  || بان
-Bbco || برودكاست للاونلاين فقط
-**═════════════════════**
-`);
-
-message.channel.send('**BlueBot: __In Ur DM__ __بالــخـــاــص__**');
-
-    }
-});
 client.on('message', message => {
     if (message.content === 'Bhelp') {
         let helpEmbed = new Discord.RichEmbed()
