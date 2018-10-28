@@ -442,7 +442,7 @@ client.on('message', message => {
         .addField('Binvites , Binvite', 'لمعرفة عدد دعواتك')
         .addField('Bmembers', 'معرفة معلومات الاعبين')
         .addField('Bnew', 'لفتح تذكرة')
-        .addField('**اوامر ادارية**')
+        .addField('هنا', '**اوامر ادارية**')
         .addField('Bgiveaway', 'قيف اواي')
         .addField('Bclean', 'لمسح 12 رسالة فقط')
         .addField('Bserver', 'لمعرفة معلومات السيرفر')
@@ -1511,7 +1511,28 @@ client.on('message', message => {
  
  
  
- 
+ client.on('message', message => {
+   let embed = new Discord.RichEmbed()
+
+    let args = message.content.split(' ').slice(1).join(' ');
+     if(!message.channel.guild) return;
+if(message.content.split(' ')[0] == 'BBbc') {
+         message.react("✔️")
+          let embed = new Discord.RichEmbed()
+    .setColor("#FF00FF")
+    .setThumbnail(message.author.avatarURL)   
+                                      .addField('تم الارسال بواسطة :', "<@" + message.author.id + ">")
+                 message.channel.sendEmbed(embed);
+        message.guild.members.forEach(m => {
+            var bc = new Discord.RichEmbed()
+.addField('**● Sender  :**', `*** → ${message.author.username}#${message.author.discriminator}***`)
+            .addField('***● Server  :***', `*** → ${message.guild.name}***`)               
+    .setColor('#ff0000')
+                 .addField('ّ', args)
+            m.send(``,{embed: bc});
+        });
+    }
+})
  
  
  
