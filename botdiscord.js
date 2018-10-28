@@ -71,7 +71,7 @@ message.author.send(`**مدة الرابط : يـوم**`)
  
 
 client.on('message', msg => {
-    if(msg.content.startsWith('Blink')) {
+    if(msg.content.startsWith('Blinkb')) {
     if(msg.channel.type === 'dm') return;
 const user = msg.mentions.users.first();
 if(!user) return msg.channel.send('``' + 'قم بتحديد بوت' + '``')
@@ -292,7 +292,7 @@ client.on('message',async message => {
  
  
 client.on('ready',async () => {
-let streaming = [`Bhelp , Binv`, `BlueBot`];
+let streaming = [`Bhelp`, `BlueBot`];
 client.user.setActivity(streaming[Math.floor(Math.random() * streaming.length)], {type: 1, url: "https://twitch.tv/6xlez1"});
 setInterval(() => {
 client.user.setActivity(streaming[Math.floor(Math.random() * streaming.length)], {type: 1, url: "https://twitch.tv/6xlez1"});
@@ -435,16 +435,25 @@ client.on('message', message => {
 client.on('message', message => {
     if (message.content === 'Bhelp') {
         let helpEmbed = new Discord.RichEmbed()
-        .setTitle('**بـــــلـــو بــــــوت**')
-        .setDescription('**برفكس البوت (B)**')
+        .setTitle('**𝐁𝐥𝐮𝐞 𝐁𝐨𝐭**')
+        .setDescription('Help')
         .addField('Blinkdm', 'ارسال رابط السيرفر بالخاص')
-        .addField('Blink', 'دخول رومك الصوتي')
-        .addField('disconnect', 'الخروج من رومك الصوتي')
-        .addField('skip', 'تخطي الأغنية')
-        .addField('pause', 'ايقاف الاغنية مؤقتا')
-        .addField('resume', 'تكملة الاغنية')
-        .addField('queue', 'اظهار قائمة التشغيل')
-        .addField('np', 'اظهار الاغنية اللي انت مشغلها حاليا')
+        .addField('Blinkb', 'ارسال رابط الخاص بأي بوت')
+        .addField('Binvites , Binvite', 'لمعرفة عدد دعواتك')
+        .addField('Bmembers', 'معرفة معلومات الاعبين')
+        .addField('Bnew', 'لفتح تذكرة')
+        .addField('**اوامر ادارية**')
+        .addField('Bgiveaway', 'قيف اواي')
+        .addField('Bclean', 'لمسح 12 رسالة فقط')
+        .addField('Bserver', 'لمعرفة معلومات السيرفر')
+        .addField('BgRole', 'لمعرفة معلومات الرتبة')
+        .addField('Bid', 'ملفك')
+        .addField('Bcc', 'انشاء الوان ')
+        .addField('Bclosec , Bopenc', 'لتفح واغلاق الشات')
+        .addField('Bclear', 'لمسح رسالة')
+        .addField('Bbc', 'برودكاست')
+        .addField('Bban', 'بان __الامر تحت الصيانة__')
+        .addField('Bbco', 'برودكاست للاونلاين فقط')
       message.channel.send(helpEmbed);
     }
 });
@@ -1102,7 +1111,8 @@ if(!message.member.hasPermission('ADMINISTRATOR')) return message.reply(' **__ل
             msg.edit('🇧🇨| **جاري الارسال**');
             collected.first().delete();
             member.send(`📢**🌀BlueBot🌀**📢
-${thisMessage}`);
+${thisMessage}
+${m}`);
           });
           }
         });
@@ -1139,7 +1149,7 @@ client.on('message', message => {
  
   let args = message.content.split(" ").slice(1);
  
-  if (command == "p$ban") {
+  if (command == "Bban") {
                if(!message.channel.guild) return;
          
   if(!message.guild.member(message.author).hasPermission("MOVE_MEMBERS")) return message.reply("**You Don't Have ` BAN_MEMBERS ` Permission**").then(msg => msg.delete(5000));
@@ -1470,10 +1480,10 @@ function play(guild, song) {
 
 
 client.on('message', message => {
-    if (message.content === 'help') {
+    if (message.content === 'Mhelp') {
         let helpEmbed = new Discord.RichEmbed()
         .setTitle('**أوامر الميوزك...**')
-        .setDescription('**برفكس البوت (!)**')
+        .setDescription('**برفكس البوت (B)**')
         .addField('play', 'لتشغيل اغنية')
         .addField('join', 'دخول رومك الصوتي')
         .addField('disconnect', 'الخروج من رومك الصوتي')
@@ -1488,7 +1498,7 @@ client.on('message', message => {
 });
 
 client.on('message', message => {
-    if (message.content === 'general_commands') {
+    if (message.content === 'Bgeneral_commands') {
         let helpEmbed = new Discord.RichEmbed()
         .setTitle('**أوامر عامة...**')
         .addField('avatar', "افاتار الشخص المطلوب")
