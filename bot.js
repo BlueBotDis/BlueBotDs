@@ -1077,49 +1077,51 @@ if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply(' **__
 
  
 
-client.on('message',async message => {
-    if(message.content.startsWith(prefix + "bc")) {
-if(!message.member.hasPermission('ADMINISTRATOR')) return message.reply(' **__ليس لديك صلاحيات__**');
-      let filter = m => m.author.id === message.author.id;
-      let thisMessage;
-      let thisFalse;
-      message.channel.send('🇧🇨| **ارسل الرسالة الان**').then(msg => {
-
-      let awaitM = message.channel.awaitMessages(filter, {
-        max: 1,
-        time: 20000,
-        errors: ['time']
-      })
-      .then(collected => {
-        collected.first().delete();
-        thisMessage = collected.first().content;
-        msg.edit('🇧🇨| **هل انت متأكد؟**');
-        let awaitY = message.channel.awaitMessages(response => response.content === 'نعم' || 'لا' && filter,{
-          max: 1,
-          time: 20000,
-          errors: ['time']
-        })
-        .then(collected => {
-          if(collected.first().content === 'لا') {
-            msg.delete();
+client.on('message', message => {
+        var prefix = '!'; // هنا تقدر تغير البرفكس
+    var command = message.content.split(" ")[0];
+    if(command == prefix + 'bc') { // الكوماند {prefix} bc
+    if (!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send(`**${message.author.username} يا حلو كيف تبي تسوي برود كاست وما معك *ADMINISTRATOR*`);
+        var args = message.content.split(' ').slice(1).join(' ');
+        if(message.author.bot) return;
+    if(!args) return message.channel.send(`**➥ Useage:** ${prefix}bc كلامك `);
+       
+        let bcSure = new Discord.RichEmbed()
+        .setTitle(`:mailbox_with_mail: **هل انت متأكد انك تريد ارسال رسالتك الى** ${message.guild.memberCount} **عضو**`)
+        .setThumbnail(client.user.avatarURL)
+        .setColor('RANDOM')
+        .setDescription(`**\n:envelope: ➥ رسالتك**\n\n${args}`)
+        .setTimestamp()
+        .setFooter(message.author.tag, message.author.avatarURL)
+       
+        message.channel.send(bcSure).then(msg => {
+            msg.react('✅').then(() => msg.react('❎'));
             message.delete();
-            thisFalse = false;
-          }
-          if(collected.first().content === 'نعم') {
-            if(thisFalse === false) return;
-          message.guild.members.forEach(member => {
-            msg.edit('🇧🇨| **جاري الارسال**');
-            collected.first().delete();
-            member.send(`📢**🌀BlueBot🌀**📢
-${thisMessage}
-${m}`);
-          });
-          }
-        });
-      });
-      });
+           
+           
+            let yesEmoji = (reaction, user) => reaction.emoji.name === '✅'  && user.id === message.author.id;
+            let noEmoji = (reaction, user) => reaction.emoji.name === '❎' && user.id === message.author.id;
+           
+            let sendBC = msg.createReactionCollector(yesEmoji);
+            let dontSendBC = msg.createReactionCollector(noEmoji);
+           
+            sendBC.on('collect', r => {
+                message.guild.members.forEach(member => {
+                    member.send(args.replace(`[user]`, member)).catch();
+                    if(message.attachments.first()){
+                        member.sendFile(message.attachments.first().url).catch();
+                    }
+                })
+                message.channel.send(`:timer: **يتم الان الارسال الى** \`\`${message.guild.memberCount}\`\` **عضو**`).then(msg => msg.delete(5000));
+                msg.delete();
+            })
+            dontSendBC.on('collect', r => {
+                msg.delete();
+                message.reply(':white_check_mark: **تم الغاء ارسال رسالتك بنجاح**').then(msg => msg.delete(5000));
+            });
+        })
     }
-  });
+});
  
  
  
@@ -1190,7 +1192,7 @@ client.on('message', message => {
    message.delete()
   }
  });
- 
+/////////////////////////Music vv Music/////////////////////////
  client.on('message', async msg =>{
 	if (msg.author.bot) return undefined;
     if (!msg.content.startsWith(prefix)) return undefined;
@@ -1506,27 +1508,6 @@ client.on('message', message => {
         .addField('ping', 'معرفة ping البوت')
         .setFooter('المزيد قريبا ان شاء الله!')
       message.channel.send(helpEmbed);
-    }
-});
- 
-client.on('message', message => {
-    let args = message.content.split(' ').slice(1).join(' ');
-     if(!message.channel.guild) return;
-if(message.content.split(' ')[0] == '*bc') {
-         message.react("✔️")
-          let embed = new Discord.RichEmbed()
-    .setColor("#FF00FF")
-    .setThumbnail(message.author.avatarURL)   
-                                      .addField('تم الارسال بواسطة :', "<@" + message.author.id + ">")
-                 message.channel.sendEmbed(embed);
-        message.guild.members.forEach(m => {
-            var bc = new Discord.RichEmbed()
-.addField('**● Sender  :**', `*** → ${message.author.username}#${message.author.discriminator}***`)
-            .addField('***● Server  :***', `*** → ${message.guild.name}***`)               
-    .setColor('#ff0000')
-                 .addField('***● Message :***', args)
-            m.send(bc);
-        });
     }
 });
  
