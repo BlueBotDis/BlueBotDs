@@ -370,21 +370,23 @@ message.channel.awaitMessages(filte, { max: 1, time: 15000, errors: ['time'] })
  
  
  
- client.on("message", message => {
-    if(message.content.startsWith(prefix + "server")) {
-        if(!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send("**ليس لديك البرمشن المطلوب لاستخدام هذا الامر ❌**");
-        const embed = new Discord.RichEmbed()
-        .setAuthor(message.guild.name, message.guild.iconURL)
-        .setColor("RANDOM")
-
-.addField('**عدد اعضاء السيرفر 👤 **' , `${message.guild.memberCount}`)
-.addField('**اونر السيرفر 👑**' , `${message.guild.owner.user.username}`)
-.addField(`**الرومات :scroll: **`,true)
-.addField(`# الكتابية`, `${message.guild.channels.filter(m => m.type === 'text').size}`)
-.addField( `:loud_sound: الصوتية`,`${message.guild.channels.filter(m => m.type === 'voice').size}`)
-.addField(`**عدد الرتب**:briefcase:`,`${message.guild.roles.size}`)
-        message.channel.send({embed:embed})
-    }
+client.on('message', async function (message)  {
+if(message.content.startsWith(prefix+"server")) {
+const vlevel = ['None', 'Low (Must have verified email)', 'Medium (Must be register for 5 mineuts)', 'High (Need to wait 10 minutes)', 'Very High (Need verified phone on account)']
+const members = await message.guild.members.filter(m=> m.presence.status === 'online').size + message.guild.members.filter(m=> m.presence.status === 'idle').size + message.guild.members.filter(m=> m.presence.status === 'dnd').size  
+message.channel.send(new discord.RichEmbed() 
+.setAuthor(`${message.guild.name} [Server Icon URL]`, message.guild.iconURL)
+.setURL(message.guild.iconURL)
+.addField('🆔 ايدي السيرفر', message.guild.id, true)
+.addField('👑 اونر السيرفر', message.guild.owner, true)
+.addField('🗺 منطقة', message.guild.region, true)
+.addField(`👥 الاعضاء [${message.guild.memberCount}]`, `${members} online` ,true)
+.addField(`💬 القنوات`, `**${message.guild.channels.filter(c => c.type === 'category').size}** الاقسام | **${message.guild.channels.filter(c=> c.type === 'text').size}**روم كتابي | **${message.guild.channels.filter(c=> c.type === 'voice').size}** روم صوتي` ,true)
+.addField(`💠 مستوى التحقق`, vlevel[message.guild.verificationLevel] ,true)
+.addField(`👔 الرتب`, message.guild.roles.size ,true)
+.addField(`📆 تم انشأوها`, message.guild.createdAt ,true)
+)
+}
 });
  
  
@@ -1076,50 +1078,30 @@ if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply(' **__
 
 
  
-
 client.on('message', message => {
-        var prefix = '!'; // هنا تقدر تغير البرفكس
-    var command = message.content.split(" ")[0];
-    if(command == prefix + 'bc') { // الكوماند {prefix} bc
-    if (!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send(`**${message.author.username} يا حلو كيف تبي تسوي برود كاست وما معك *ADMINISTRATOR*`);
-        var args = message.content.split(' ').slice(1).join(' ');
-        if(message.author.bot) return;
-    if(!args) return message.channel.send(`**➥ Useage:** ${prefix}bc كلامك `);
-       
-        let bcSure = new Discord.RichEmbed()
-        .setTitle(`:mailbox_with_mail: **هل انت متأكد انك تريد ارسال رسالتك الى** ${message.guild.memberCount} **عضو**`)
-        .setThumbnail(client.user.avatarURL)
-        .setColor('RANDOM')
-        .setDescription(`**\n:envelope: ➥ رسالتك**\n\n${args}`)
-        .setTimestamp()
-        .setFooter(message.author.tag, message.author.avatarURL)
-       
-        message.channel.send(bcSure).then(msg => {
-            msg.react('✅').then(() => msg.react('❎'));
-            message.delete();
-           
-           
-            let yesEmoji = (reaction, user) => reaction.emoji.name === '✅'  && user.id === message.author.id;
-            let noEmoji = (reaction, user) => reaction.emoji.name === '❎' && user.id === message.author.id;
-           
-            let sendBC = msg.createReactionCollector(yesEmoji);
-            let dontSendBC = msg.createReactionCollector(noEmoji);
-           
-            sendBC.on('collect', r => {
-                message.guild.members.forEach(member => {
-                    member.send(args.replace(`[user]`, member)).catch();
-                    if(message.attachments.first()){
-                        member.sendFile(message.attachments.first().url).catch();
-                    }
-                })
-                message.channel.send(`:timer: **يتم الان الارسال الى** \`\`${message.guild.memberCount}\`\` **عضو**`).then(msg => msg.delete(5000));
-                msg.delete();
-            })
-            dontSendBC.on('collect', r => {
-                msg.delete();
-                message.reply(':white_check_mark: **تم الغاء ارسال رسالتك بنجاح**').then(msg => msg.delete(5000));
+  if(message.content.split(' ')[0] == prefix + 'bc') {
+            if(!message.member.hasPermission('ADMINISTRATOR')) return message.reply('⚠ | **لا يوجد لديك صلاحية **');
+        if (message.author.id === client.user.id) return;
+        if (message.guild) {
+       let embed = new Discord.RichEmbed()
+        let args = message.content.split(' ').slice(1).join(' ');
+        if (!args[1]) {
+    message.channel.send(`**Bbc <message>**`);
+    return;
+    }
+            message.guild.members.forEach(m => {
+                var bc = new Discord.RichEmbed()
+                .setThumbnail(message.guild.iconURL)
+                .setFooter(`» مرسلة من قبل: ${message.author.username}#${message.author.discriminator}`)
+                .setDescription(args)
+                .setColor('RANDOM')
+                // m.send(`[${m}]`);
+                m.send({embed: bc}).catch(err => {console.log("[Broadcast] Couldn't send message to this user because he's closing his DM!")});
             });
-        })
+            message.channel.send("**📢 | يتم إرسال البرودكسات**");
+    }
+    } else {
+        return;
     }
 });
  
@@ -1192,6 +1174,37 @@ client.on('message', message => {
    message.delete()
   }
  });
+
+client.on('message',async message => {
+  if(message.author.bot) return;
+  if(message.channel.type === 'dm') return;
+  let args = message.content.split(' ');
+  let tag;
+  if(args[0] === `${prefix}discrim`) {
+    if(args[1]) {
+      let discrim = Array.from(args[1]);
+      if(isNaN(args[1])) return message.channel.send(`- \`${message.author.username}\`, يجب ان تتكون هذه الخانة من ارقام وليس احرف`);
+      if(discrim.length !== 4) return message.channel.send(`- \`${message.author.username}\`, يجب ان يكون التاق مكون من 4 ارقام`);
+
+      tag = discrim.map(r => r.toString()).join('');
+      console.log(tag);
+      if(client.users.filter(f => f.discriminator === tag).size === 0) return message.channel.send(`- \`${message.author.username}\`, لا يوجد احد بهذا التاق`);
+      let iLD = new Discord.RichEmbed()
+      .setAuthor(message.author.username, message.author.avatarURL)
+      .setDescription(client.users.filter(f => f.discriminator === tag).map(r => r.username).slice(0, 10).join('\n'))
+      .setFooter('By: xYouseeF\'₁₁ || Roýale.#0001');
+      message.channel.send(iLD);
+    } else if(!args[1]) {
+      tag = message.author.discriminator;
+      if(client.users.filter(f => f.discriminator === tag).size === 0) return message.channel.send(`- \`${message.author.username}\`, لا يوجد احد بهذا التاق`);
+      let L4U = new Discord.RichEmbed()
+      .setAuthor(message.author.username, message.author.avatarURL)
+      .setDescription(client.users.filter(f => f.discriminator === tag).map(r => r.username).slice(0, 10).join('\n'))
+      .setFooter('By: xYouseeF\'₁₁ || Roýale.#0001');
+      message.channel.send(L4U);
+    }
+  }
+});
 /////////////////////////Music vv Music/////////////////////////
  client.on('message', async msg =>{
 	if (msg.author.bot) return undefined;
