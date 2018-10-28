@@ -292,7 +292,7 @@ client.on('message',async message => {
  
  
 client.on('ready',async () => {
-let streaming = [`Bhelp , Binv`, `In ${client.guilds.size} Servers`, `BlueBot`];
+let streaming = [`Bhelp , Binv`, `BlueBot`];
 client.user.setActivity(streaming[Math.floor(Math.random() * streaming.length)], {type: 1, url: "https://twitch.tv/6xlez1"});
 setInterval(() => {
 client.user.setActivity(streaming[Math.floor(Math.random() * streaming.length)], {type: 1, url: "https://twitch.tv/6xlez1"});
