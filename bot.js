@@ -455,7 +455,7 @@ client.on('message', message => {
         .addField('Binvites , Binvite', 'لمعرفة عدد دعواتك')
         .addField('Bmembers', 'معرفة معلومات الاعبين')
         .addField('Bnew', 'لفتح تذكرة')
-        .addField('', '**اوامر ادارية**')
+        .addField('**═══════════════════**', '**═══════════════════**')
         .addField('Bgiveaway', 'قيف اواي')
         .addField('Bclean', 'لمسح 12 رسالة فقط')
         .addField('Bserver', 'لمعرفة معلومات السيرفر')
