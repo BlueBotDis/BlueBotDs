@@ -1217,6 +1217,30 @@ client.on('message',async message => {
     }
   }
 });
+
+client.on('guildMemberAdd', member => {
+    let channel = member.guild.channels.find('name', 'welcome🤙');
+    let memberavatar = member.user.avatarURL
+      if (!channel) return;
+    let embed = new Discord.RichEmbed()
+        .setColor('RANDOM')
+        .setThumbnail(memberavatar)
+        .addField('🎽 | name :  ',`${member}`)
+        .addField('📢 | نورت السيرفر ي قلبي' , `Welcome to the server, ${member}`)
+        .addField('🆔 | user :', "**[" + `${member.id}` + "]**" )
+                .addField('➡| انت العضو رقم',`${member.guild.memberCount}`)
+               
+                  .addField("Name:",`<@` + `${member.id}` + `>`, true)
+                     
+                                     .addField(' الـسيرفر', `${member.guild.name}`,true)
+    .addField('مدة انشاء حسابك', member.user.createdAt.toLocaleString(), true)
+ 
+                                       
+     .setFooter("${member.guild.name}")
+        .setTimestamp()
+   
+      channel.sendEmbed(embed);
+    });
 /////////////////////////Music vv Music/////////////////////////
  client.on('message', async msg =>{
 	if (msg.author.bot) return undefined;
