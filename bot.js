@@ -93,7 +93,7 @@ msg.channel.send(`**Bot InviteURL : ** https://discordapp.com/oauth2/authorize?c
 
 
 client.on('message', message => {
-    if(message.content == 'p$bans'){
+    if(message.content == 'Bbans'){
    if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply('⚠ | **ليس لديك صلاحيات**');
         message.guild.fetchBans().then(bans => {
             bans.forEach(user => {
@@ -375,7 +375,7 @@ if(message.content.startsWith(prefix+"server")) {
 const vlevel = ['None', 'Low (Must have verified email)', 'Medium (Must be register for 5 mineuts)', 'High (Need to wait 10 minutes)', 'Very High (Need verified phone on account)']
 const members = await message.guild.members.filter(m=> m.presence.status === 'online').size + message.guild.members.filter(m=> m.presence.status === 'idle').size + message.guild.members.filter(m=> m.presence.status === 'dnd').size  
 message.channel.send(new discord.RichEmbed() 
-.setAuthor(`${message.guild.name} [Server Icon URL]`, message.guild.iconURL)
+.setAuthor(`${message.guild.name} [https://cdn.discordapp.com/attachments/506588997573935136/506892791931207702/hh.jpg]`, message.guild.iconURL)
 .setURL(message.guild.iconURL)
 .addField('🆔 ايدي السيرفر', message.guild.id, true)
 .addField('👑 اونر السيرفر', message.guild.owner, true)
@@ -396,6 +396,17 @@ message.channel.send(new discord.RichEmbed()
 
 
 
+ client.on('ready',async () => {
+  let guild = client.guilds.get("505067777795686457");
+  let cMembers = guild.channels.get("506881201944920079"); // Members
+  let cBots = guild.channels.get("506881094629457921"); // Bots
+  let cUser = guild.channels.get("506885705558130688"); // Bots
+  setInterval(() => {
+    cMembers.setName(`Members : ${guild.memberCount} `);
+    cBots.setName(`Servers : ${client.guilds.size} `);
+    cUser.setName(`Users: ${client.users.size} `);
+  }, 5000);
+});
 
 
 
@@ -444,7 +455,7 @@ client.on('message', message => {
         .addField('Binvites , Binvite', 'لمعرفة عدد دعواتك')
         .addField('Bmembers', 'معرفة معلومات الاعبين')
         .addField('Bnew', 'لفتح تذكرة')
-        .addField('هنا', '**اوامر ادارية**')
+        .addField('', '**اوامر ادارية**')
         .addField('Bgiveaway', 'قيف اواي')
         .addField('Bclean', 'لمسح 12 رسالة فقط')
         .addField('Bserver', 'لمعرفة معلومات السيرفر')
@@ -456,6 +467,7 @@ client.on('message', message => {
         .addField('Bbc', 'برودكاست')
         .addField('Bban', 'بان __الامر تحت الصيانة__')
         .addField('Bbco', 'برودكاست للاونلاين فقط')
+        .addField('Mhelp', 'لاوامر الميوزك')
       message.channel.send(helpEmbed);
     }
 });
