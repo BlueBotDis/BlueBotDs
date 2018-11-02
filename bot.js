@@ -1217,21 +1217,18 @@ client.on('message',async message => {
 });
 
 client.on('guildMemberAdd', member => {
-    let channel = member.guild.channels.find('name', 'welcome🤙');
+    let channel = member.guild.channels.find('name', 'welcome');
     let memberavatar = member.user.avatarURL
       if (!channel) return;
     let embed = new Discord.RichEmbed()
         .setColor('RANDOM')
         .setThumbnail(memberavatar)
-        .addField('🎽 | name :  ',`${member}`)
-        .addField('📢 | نورت السيرفر ي قلبي' , `Welcome to the server, ${member}`)
-        .addField('🆔 | user :', "**[" + `${member.id}` + "]**" )
-                .addField('➡| انت العضو رقم',`${member.guild.memberCount}`)
-               
-                  .addField("Name:",`<@` + `${member.id}` + `>`, true)
-                     
-                                     .addField(' الـسيرفر', `${member.guild.name}`,true)
-    .addField('مدة انشاء حسابك', member.user.createdAt.toLocaleString(), true)
+        .addField('•🔰|Name» الإسم',`${member}`)
+        .addField('•🌹|Welcome » نورت السيرفر' , `Welcome to the server, ${member}`)
+        .addField('•🆔| User » اي دي العضو', "**[" + `${member.id}` + "]**" )
+                .addField('➡| انت العضو رقم',`${member.guild.memberCount}`)                     
+                                     .addField('•🔮|Server Name » اسم السيرفر', `${member.guild.name}`,true)
+    .addField('•🕣|Time Create » مدة انشاء حسابك', member.user.createdAt.toLocaleString(), true)
  
                                        
      .setFooter("${member.guild.name}")
@@ -1239,6 +1236,60 @@ client.on('guildMemberAdd', member => {
    
       channel.sendEmbed(embed);
     });
+client.on('message',function(message) {
+    let prefix = "B";
+let args = message.content.split(" ").slice(1).join(" ");
+if(message.content.startsWith(prefix + "say")) {
+if(!args) return;
+message.channel.send(`**# ${args}**`); // محطوط # عشان محد يستخدم البوت لتبنيد / طرد احد من السيرفر
+}
+});
+
+client.on('message', message => {
+     if (message.content === "&id") {
+     let embed = new Discord.RichEmbed()
+  .setThumbnail(message.author.avatarURL)  
+  .setAuthor(message.author.username)
+.setDescription("معلومات عن الحــساب")
+               .setFooter(`BlueBot`, '')
+  .setColor("#9B59B6")
+  .addField("Servers " , `${message.author.guilds.size}`)
+  .addField("Your name", `${message.author.username}`)
+  .addField('YourCode', message.author.discriminator)
+  .addField("id", message.author.id)
+  .addField('Bot', message.author.bot) /// Fox
+  .addField("crate at", message.author.createdAt)
+     
+     
+  message.channel.sendEmbed(embed);
+    }
+});
+const moment = require("moment")
+client.on("guildMemberAdd", m => {
+    if (datediff(parseDate(moment(m.user.createdTimestamp).format('l')), parseDate(moment().format('l'))) < 8) {
+        m.ban();
+    };
+    function parseDate(str) {
+        var mdy = str.split('/');
+        return new Date(mdy[2], mdy[0]-1, mdy[1]);
+    };
+    
+    function datediff(first, second) {
+        return Math.round((second-first)/(1000*60*60*24));
+    };
+});
+client.on('message', message => {
+        if (message.content === prefix + "inv") {
+            if(!message.channel.guild) return;
+        let embed = new Discord.RichEmbed()
+        .setAuthor(` ${message.author.username} `, message.author.avatarURL)      
+        .setTitle(`:small_orange_diamond:اضغط هنا `)
+        .setURL(`https://discordapp.com/oauth2/authorize/?permissions=268443710&scope=bot&client_id=505859227240366082`)
+        .setThumbnail("https://discordapp.com/oauth2/authorize/?permissions=268443710&scope=bot&client_id=505859227240366082")
+        .addField('🔹By', "<@" + message.author.id + ">")        
+     message.channel.sendEmbed(embed);
+       }
+   });
 /////////////////////////Music vv Music/////////////////////////
  client.on('message', async msg =>{
 	if (msg.author.bot) return undefined;
